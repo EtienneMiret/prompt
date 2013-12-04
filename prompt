@@ -1,0 +1,52 @@
+#!/usr/bin/perl -w
+
+use strict;
+
+my $date;
+my $pwd = $ENV{"PWD"};
+my $home = $ENV{"HOME"};
+my $columns;
+
+$columns = 80;
+
+while ( @ARGV ) {
+    my $a = shift @ARGV;
+    if ( $a eq "-c" ) {
+	if ( length(scalar(@ARGV)) > 0 and $ARGV[0] =~ /^\d+/ ) {
+	    $columns = shift @ARGV;
+	} else {
+	    print "ERROR: -c requires numeric argument\n";
+	}
+    }
+}
+
+if ($ENV{"LANG"} =~ /^fr_/i ) {
+	$date = `date "+%A %d %B %Y %T"`; # Localized, but best for french
+} else {
+	$date = `date "+%A %B %d %Y %T"`; # Localized, but best for english
+}
+$date =~ s/\s*$//g; # `date` normaly ends with a "\n"
+$date =~ s/^(\w)/\u$1/;
+$pwd =~ s/^$home/~/;
+my $space = $columns - length($date) - length($pwd);
+
+# ANSI terminal colors:
+my $black	= "\e[30m";
+my $red		= "\e[31m";
+my $green	= "\e[32m";
+my $yellow	= "\e[33m";
+my $blue	= "\e[34m";
+my $magenta	= "\e[35m";
+my $cyan	= "\e[35m";
+my $white	= "\e[35m";
+my $normal	= "\e[0m";
+
+if ( $space > 1 ) {
+	print $green, $pwd, (" " x $space), $red, $date, $normal, "\n";
+} elsif ( length($pwd) < $columns ) {
+	print $green, $pwd, $normal, "\n";
+} else {
+	$columns -= 3;
+	$pwd =~ s/.*(.{$columns})$/...$1/;
+	print $green, $pwd, $normal, "\n";
+}
