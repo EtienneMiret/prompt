@@ -9,16 +9,10 @@ short prompt, while having the working directory printed.
 If there is enough place, `prompt` will also display the current date after the
 working directory.
 
-<pre><span style="color: green;">~/a/typical/terminal/line/is/80/chars/long</span>         <span style="color: red;">Sunday March 12 2017 06:13:11</span>
-etienne@axtar$
-</pre>
-
 If there is not enough place to display the working directory on one line,
 `prompt` will only display the end of it.
 
-<pre><span style="color: green;">...0/chars/long/this/is/a/very/very/long/path/so/that/it/does/not/fit/in/on/line</span>
-etienne@axtar$
-</pre>
+![Screenshot](/Screenshot.png)
 
 ## How to use
 
