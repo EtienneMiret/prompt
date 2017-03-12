@@ -21,9 +21,9 @@ while ( @ARGV ) {
 }
 
 if ($ENV{"LANG"} =~ /^fr_/i ) {
-	$date = `date "+%A %d %B %Y %T"`; # Localized, but best for french
+	$date = `date "+%A %d %B %Y %T"`; # Localized, but best for French
 } else {
-	$date = `date "+%A %B %d %Y %T"`; # Localized, but best for english
+	$date = `date "+%A %B %d %Y %T"`; # Localized, but best for English
 }
 $date =~ s/\s*$//g; # `date` normaly ends with a "\n"
 $date =~ s/^(\w)/\u$1/;
