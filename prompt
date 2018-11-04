@@ -32,6 +32,7 @@ if ($ENV{"LANG"} =~ /^fr_/i ) {
 } else {
 	$date = `date "+%A %B %d %Y %T"`; # Localized, but best for English
 }
+$date = decode ($encoding, $date);
 $date =~ s/\s*$//g; # `date` normaly ends with a "\n"
 $date =~ s/^(\w)/\u$1/;
 $pwd =~ s/^$home/~/;
