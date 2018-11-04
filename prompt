@@ -7,6 +7,7 @@ use utf8;
 use Encode;
 use Text::CharWidth qw(mbswidth);
 use Getopt::Long;
+use Pod::Usage;
 
 my $encoding = `locale charmap`;
 my $date;
@@ -14,15 +15,18 @@ my $pwd = decode($encoding, $ENV{"PWD"});
 my $home = decode($encoding, $ENV{"HOME"});
 my $dateFormat;
 my $columns;
+my $help = 0;
 
 binmode(STDOUT, ":encoding($encoding)");
 
 $columns = 80;
 
 GetOptions (
+    'help' => \$help,
     'columns=i' => \$columns,
     'date-fmt=s' => \$dateFormat
-);
+) or pod2usage (2);
+pod2usage (-verbose => 2) if $help;
 
 if (defined $dateFormat) {
     $date = `date "+$dateFormat"`;
@@ -56,3 +60,51 @@ if ( $space > 0 ) {
     }
     print $green, "…", $pwd, $normal, "\n";
 }
+
+__END__
+
+=encoding UTF-8
+
+=head1 NAME
+
+prompt - pretty shell prompt
+
+=head1 SYNOPSIS
+
+prompt [options]
+
+ Options:
+   --help               full documentation
+   --columns NUM        column width of the terminal
+   --date-fmt STRING    date format
+
+=head1 OPTIONS
+
+=over
+
+=item B<--help>
+
+Print the manual page and exits.
+
+=item B<--columns NUM>
+
+Set the number of columns to output. Should be your terminal’s width.
+
+=item B<--date-fmt STRING>
+
+Specify how to format the date. It must be a valid output format for the
+B<date> command, without the leading '+'.
+
+=back
+
+=head1 DESCRIPTION
+
+B<prompt> will allow you to display the full path of your working directory
+on a separate line, just above the shell’s prompt. This mean you can have
+a short prompt, while having the working directory printed.
+
+If there is enough place, B<prompt> will also display the current date after
+the working directory.
+
+If there is not enough place to display the working directory on one line,
+B<prompt> will only display the end of it.
