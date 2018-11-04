@@ -16,6 +16,7 @@ my $home = decode($encoding, $ENV{"HOME"});
 my $dateFormat;
 my $columns;
 my $help = 0;
+our $VERSION = "1.1.0-snapshot";
 
 binmode(STDOUT, ":encoding($encoding)");
 
