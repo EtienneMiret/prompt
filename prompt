@@ -27,7 +27,7 @@ GetOptions (
 if (defined $dateFormat) {
     $date = `date "+$dateFormat"`;
 } else {
-    $date = `date`
+    $date = `date`;
 }
 $date = decode ($encoding, $date);
 $date =~ s/\s*$//g; # `date` normaly ends with a "\n"
