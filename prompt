@@ -81,13 +81,20 @@ prompt - pretty shell prompt
 prompt [options]
 
  Options:
+   --version            print version
    --help               full documentation
    --columns NUM        column width of the terminal
    --date-fmt STRING    date format
 
+Options can be abbrieviated to uniqueness.
+
 =head1 OPTIONS
 
 =over
+
+=item B<--version>
+
+Print version information and exit.
 
 =item B<--help>
 
