@@ -21,7 +21,12 @@ binmode(STDOUT, ":encoding($encoding)");
 
 $columns = 80;
 
-Getopt::Long::Configure("require_order", "no_ignore_case", "no_getopt_compat");
+Getopt::Long::Configure(
+    "auto_version",
+    "require_order",
+    "no_ignore_case",
+    "no_getopt_compat"
+);
 GetOptions (
     'help' => \$help,
     'columns=i' => \$columns,
