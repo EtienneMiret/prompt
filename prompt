@@ -6,6 +6,7 @@ use warnings;
 use utf8;
 use Encode;
 use Text::CharWidth qw(mbswidth);
+use Getopt::Long;
 
 my $encoding = `locale charmap`;
 my $date;
@@ -17,16 +18,9 @@ binmode(STDOUT, ":encoding($encoding)");
 
 $columns = 80;
 
-while ( @ARGV ) {
-    my $a = shift @ARGV;
-    if ( $a eq "-c" ) {
-	if ( length(scalar(@ARGV)) > 0 and $ARGV[0] =~ /^\d+/ ) {
-	    $columns = shift @ARGV;
-	} else {
-	    print "ERROR: -c requires numeric argument\n";
-	}
-    }
-}
+GetOptions (
+    'columns=i' => \$columns
+);
 
 if ($ENV{"LANG"} =~ /^fr_/i ) {
 	$date = `date "+%A %d %B %Y %T"`; # Localized, but best for French
