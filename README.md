@@ -16,6 +16,10 @@ If there is not enough place to display the working directory on one line,
 
 ## How to use
 
+Install the CPAN module `Text::CharWidth`:
+
+    $ cpanm Text::CharWidth
+
 Copy the `prompt` file somewhere on your computer, e.g. `/usr/local/bin/prompt`
 or `~/bin/prompt`, make sure it is executable, and add the following to your
 `~/.profile`:
