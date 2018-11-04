@@ -12,6 +12,7 @@ my $encoding = `locale charmap`;
 my $date;
 my $pwd = decode($encoding, $ENV{"PWD"});
 my $home = decode($encoding, $ENV{"HOME"});
+my $dateFormat;
 my $columns;
 
 binmode(STDOUT, ":encoding($encoding)");
@@ -19,13 +20,14 @@ binmode(STDOUT, ":encoding($encoding)");
 $columns = 80;
 
 GetOptions (
-    'columns=i' => \$columns
+    'columns=i' => \$columns,
+    'date-fmt=s' => \$dateFormat
 );
 
-if ($ENV{"LANG"} =~ /^fr_/i ) {
-	$date = `date "+%A %d %B %Y %T"`; # Localized, but best for French
+if (defined $dateFormat) {
+    $date = `date "+$dateFormat"`;
 } else {
-	$date = `date "+%A %B %d %Y %T"`; # Localized, but best for English
+    $date = `date`
 }
 $date = decode ($encoding, $date);
 $date =~ s/\s*$//g; # `date` normaly ends with a "\n"
