@@ -1,11 +1,25 @@
 #!/usr/bin/perl -w
 
+use 5.18.2;
 use strict;
+use Encode;
 
+my $encoding = `locale charmap`;
 my $date;
-my $pwd = $ENV{"PWD"};
-my $home = $ENV{"HOME"};
+my $pwd = decode($encoding, $ENV{"PWD"});
+my $home = decode($encoding, $ENV{"HOME"});
 my $columns;
+
+binmode(STDOUT, ":encoding($encoding)");
+
+sub width {
+    my $str = shift;
+    my $count = 0;
+    while ($str =~ /\X/g) {
+        $count++;
+    }
+    return $count;
+}
 
 $columns = 80;
 
@@ -28,7 +42,7 @@ if ($ENV{"LANG"} =~ /^fr_/i ) {
 $date =~ s/\s*$//g; # `date` normaly ends with a "\n"
 $date =~ s/^(\w)/\u$1/;
 $pwd =~ s/^$home/~/;
-my $space = $columns - length($date) - length($pwd);
+my $space = $columns - width($date) - width($pwd);
 
 # ANSI terminal colors:
 my $black	= "\e[30m";
@@ -43,7 +57,7 @@ my $normal	= "\e[0m";
 
 if ( $space > 1 ) {
 	print $green, $pwd, (" " x $space), $red, $date, $normal, "\n";
-} elsif ( length($pwd) < $columns ) {
+} elsif ( width($pwd) < $columns ) {
 	print $green, $pwd, $normal, "\n";
 } else {
 	$columns -= 3;
