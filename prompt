@@ -48,9 +48,9 @@ my $cyan	= "\e[35m";
 my $white	= "\e[35m";
 my $normal	= "\e[0m";
 
-if ( $space > 1 ) {
+if ( $space > 0 ) {
 	print $green, $pwd, (" " x $space), $red, $date, $normal, "\n";
-} elsif ( mbswidth($pwd) < $columns ) {
+} elsif ( mbswidth($pwd) <= $columns ) {
 	print $green, $pwd, $normal, "\n";
 } else {
     while (mbswidth($pwd) >= $columns) {
