@@ -2,6 +2,7 @@
 
 use 5.18.2;
 use strict;
+use utf8;
 use Encode;
 use Text::CharWidth qw(mbswidth);
 
@@ -52,7 +53,8 @@ if ( $space > 1 ) {
 } elsif ( mbswidth($pwd) < $columns ) {
 	print $green, $pwd, $normal, "\n";
 } else {
-	$columns -= 3;
-	$pwd =~ s/.*(.{$columns})$/...$1/;
-	print $green, $pwd, $normal, "\n";
+    while (mbswidth($pwd) >= $columns) {
+        $pwd =~ s/^\X//;
+    }
+    print $green, "…", $pwd, $normal, "\n";
 }
