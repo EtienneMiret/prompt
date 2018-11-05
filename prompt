@@ -9,6 +9,8 @@ use Text::CharWidth qw(mbswidth);
 use Getopt::Long;
 use Pod::Usage;
 
+our $VERSION = "1.1.0";
+
 my $encoding = `locale charmap`;
 my $date;
 my $pwd = decode($encoding, $ENV{"PWD"});
@@ -18,8 +20,6 @@ my $columns;
 my $help = 0;
 my $pwdColorName = "green";
 my $dateColorName = "red";
-
-our $VERSION = "1.1.0-snapshot";
 
 binmode(STDOUT, ":encoding($encoding)");
 
