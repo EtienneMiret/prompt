@@ -102,6 +102,8 @@ prompt [options]
    --version            print version
    --help               full documentation
    --columns NUM        column width of the terminal
+   --pwd-color COLOR    color to ouput working directory
+   --date-color COLOR   color to output date
    --date-fmt STRING    date format
 
 Options can be abbrieviated to uniqueness.
@@ -121,6 +123,39 @@ Print the manual page and exits.
 =item B<--columns NUM>
 
 Set the number of columns to output. Should be your terminal’s width.
+
+=item B<--pwd-color>
+
+Set the color to use when printing current directory. See B<--date-color>
+for supported colors.
+
+=item B<--date-color>
+
+Set the color to use when printing the current date. The supported colors are:
+
+=over
+
+=item black
+
+=item red
+
+=item green
+
+=item yellow
+
+=item blue
+
+=item magenta
+
+=item cyan
+
+=item white
+
+=item default
+
+=back
+
+B<default> being the default color of your terminal.
 
 =item B<--date-fmt STRING>
 
