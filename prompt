@@ -102,7 +102,7 @@ prompt [options]
    --version            print version
    --help               full documentation
    --columns NUM        column width of the terminal
-   --pwd-color COLOR    color to ouput working directory
+   --pwd-color COLOR    color to output working directory
    --date-color COLOR   color to output date
    --date-fmt STRING    date format
 
