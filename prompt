@@ -9,7 +9,7 @@ use Text::CharWidth qw(mbswidth);
 use Getopt::Long;
 use Pod::Usage;
 
-our $VERSION = "1.1.0";
+our $VERSION = "1.2.0-snapshot";
 
 my $encoding = `locale charmap`;
 my $date;
