@@ -29,3 +29,8 @@ or `~/bin/prompt`, make sure it is executable, and add the following to your
 export PROMPT_COMMAND="/usr/local/bin/prompt -c \$COLUMNS; $PROMPT_COMMAND"
 export PS1='\u@\h\$ '
 ```
+
+## Customize
+
+Various options allow you to choose the colors to use, as well as how to format
+the date. Run `prompt --help` for more details.

@@ -16,6 +16,9 @@ my $home = decode($encoding, $ENV{"HOME"});
 my $dateFormat;
 my $columns;
 my $help = 0;
+my $pwdColorName = "green";
+my $dateColorName = "red";
+
 our $VERSION = "1.1.0-snapshot";
 
 binmode(STDOUT, ":encoding($encoding)");
@@ -31,6 +34,8 @@ Getopt::Long::Configure(
 GetOptions (
     'help' => \$help,
     'columns=i' => \$columns,
+    'pwd-color=s' => \$pwdColorName,
+    'date-color=s' => \$dateColorName,
     'date-fmt=s' => \$dateFormat
 ) or pod2usage (2);
 pod2usage (-verbose => 2) if $help;
@@ -47,25 +52,38 @@ $pwd =~ s/^$home/~/;
 my $space = $columns - mbswidth($date) - mbswidth($pwd);
 
 # ANSI terminal colors:
-my $black	= "\e[30m";
-my $red		= "\e[31m";
-my $green	= "\e[32m";
-my $yellow	= "\e[33m";
-my $blue	= "\e[34m";
-my $magenta	= "\e[35m";
-my $cyan	= "\e[35m";
-my $white	= "\e[35m";
-my $normal	= "\e[0m";
+sub ansiColor {
+    my $colorName = shift;
+    for ($colorName) {
+        if (/^black$/)   { return "\e[30m"; }
+        if (/^red$/)     { return "\e[31m"; }
+        if (/^green$/)   { return "\e[32m"; }
+        if (/^yellow$/)  { return "\e[33m"; }
+        if (/^blue$/)    { return "\e[34m"; }
+        if (/^magenta$/) { return "\e[35m"; }
+        if (/^cyan$/)    { return "\e[36m"; }
+        if (/^white$/)   { return "\e[37m"; }
+        default          { return "\e[0m"; }
+    }
+}
+
+my $pwdColor   = ansiColor ($pwdColorName);
+my $dateColor  = ansiColor ($dateColorName);
+my $resetColor = ansiColor ("reset");
 
 if ( $space > 0 ) {
-	print $green, $pwd, (" " x $space), $red, $date, $normal, "\n";
+    print
+        $pwdColor, $pwd,
+        $resetColor, (" " x $space),
+        $dateColor, $date,
+        $resetColor, "\n";
 } elsif ( mbswidth($pwd) <= $columns ) {
-	print $green, $pwd, $normal, "\n";
+    print $pwdColor, $pwd, $resetColor, "\n";
 } else {
     while (mbswidth($pwd) >= $columns) {
         $pwd =~ s/^\X//;
     }
-    print $green, "…", $pwd, $normal, "\n";
+    print $pwdColor, "…", $pwd, $resetColor, "\n";
 }
 
 __END__
@@ -84,6 +102,8 @@ prompt [options]
    --version            print version
    --help               full documentation
    --columns NUM        column width of the terminal
+   --pwd-color COLOR    color to output working directory
+   --date-color COLOR   color to output date
    --date-fmt STRING    date format
 
 Options can be abbrieviated to uniqueness.
@@ -103,6 +123,39 @@ Print the manual page and exits.
 =item B<--columns NUM>
 
 Set the number of columns to output. Should be your terminal’s width.
+
+=item B<--pwd-color>
+
+Set the color to use when printing current directory. See B<--date-color>
+for supported colors.
+
+=item B<--date-color>
+
+Set the color to use when printing the current date. The supported colors are:
+
+=over
+
+=item black
+
+=item red
+
+=item green
+
+=item yellow
+
+=item blue
+
+=item magenta
+
+=item cyan
+
+=item white
+
+=item default
+
+=back
+
+B<default> being the default color of your terminal.
 
 =item B<--date-fmt STRING>
 
